@@ -30,40 +30,43 @@ import javax.swing.JTextField;
  */
 public class ApplicationClient extends JApplet {
 
-    private final JTextField inputField = new JTextField(10);
+    private final JTextField inputField = new JTextField();
     private final JLabel inputLabel = new JLabel("Input Your Name");
     private final JLabel outputLabel = new JLabel("Output:");
-    private final JTextField resultField = new JTextField(10);
+    private final JTextField resultField = new JTextField();
     private final JPanel mainPanel = new JPanel();
     private final JScrollPane scrollPanel = new JScrollPane();
     private final JButton button = new JButton("Отправить");
 
     @Override
     public void init() {
+//        GroupLayout mainLayout = new GroupLayout(this);
+//        getRootPane().getContentPane().setLayout(mainLayout);
+        
         GroupLayout layout = new GroupLayout(mainPanel);
         mainPanel.setLayout(layout);
         
         layout.setHorizontalGroup(layout.createParallelGroup()
                 .addGroup(layout.createSequentialGroup()
-                        .addComponent(inputLabel)
-                        .addComponent(outputLabel)
+                        .addComponent(inputLabel,100,100,100)
+                        .addComponent(outputLabel,100,100,100)
                 )
                 .addGroup(layout.createSequentialGroup()
-                        .addComponent(inputField)
-                        .addComponent(resultField)
+                        .addComponent(inputField,50,50,50)
+                        .addComponent(resultField,50,50,50)
                 )
-                .addComponent(button)
+                .addComponent(button,50,50,50)
         );
-        layout.setHorizontalGroup(layout.createSequentialGroup()
+        layout.setVerticalGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addComponent(inputLabel)
-                        .addComponent(inputField)
+                        .addComponent(inputLabel,50,50,50)
+                        .addComponent(inputField,50,50,50)
                 )
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addComponent(outputLabel)
-                        .addComponent(resultField)
+                        .addComponent(outputLabel,50,50,50)
+                        .addComponent(resultField,50,50,50)
                 )
-                .addComponent(button)
+                .addComponent(button,50,50,50)
         );
         button.addActionListener(new ActionListener() {
             @Override
@@ -73,7 +76,14 @@ public class ApplicationClient extends JApplet {
         });
         resultField.setEditable(false);
         scrollPanel.setViewportView(mainPanel);
-        add(scrollPanel);
+        add(mainPanel);
+//        add(scrollPanel);
+//        mainLayout.setHorizontalGroup(mainLayout.createParallelGroup()
+//                .addComponent(scrollPanel, GroupLayout.PREFERRED_SIZE,GroupLayout.PREFERRED_SIZE,Short.MAX_VALUE)
+//        );
+//        mainLayout.setVerticalGroup(mainLayout.createSequentialGroup()
+//                .addComponent(scrollPanel, GroupLayout.PREFERRED_SIZE,GroupLayout.PREFERRED_SIZE,Short.MAX_VALUE)
+//        );
     }
 
     // Get a connection to the servlet.

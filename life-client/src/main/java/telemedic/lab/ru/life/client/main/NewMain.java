@@ -16,6 +16,8 @@ public class NewMain {
 
     private static void createGUI(){
         ApplicationClient client = new ApplicationClient();
+        client.init();
+        client.start();
         JFrame frame = new JFrame("Life");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().add(client);
