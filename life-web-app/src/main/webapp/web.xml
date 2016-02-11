@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+
+    <display-name>ServletOfLife</display-name>
+    <description>ServletOfLife</description>
+        <servlet>
+            <servlet-name>ServletDispetcher</servlet-name>
+            <servlet-class>telemedic.lab.ru.life.web.app.ServletDispetcher</servlet-class>
+        </servlet>
+        <servlet-mapping>
+            <servlet-name>ServletDispetcher</servlet-name>
+            <url-pattern>/root/*</url-pattern>
+        </servlet-mapping>
+        <session-config>
+            <session-timeout>30</session-timeout>
+            <cookie-config>
+                <!-- see http://bugs.sun.com/bugdatabase/view_bug.do?bug_id=6890023 -->
+                <http-only>false</http-only>
+            </cookie-config>
+        </session-config>
+</web-app>
+
+
+    

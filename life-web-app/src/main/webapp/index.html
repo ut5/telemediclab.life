@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Life</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script>
+            function startApplet(){
+                var _nodeApplet = document.createElement("object");
+                _nodeApplet.setAttribute("type", "application/x-java-applet");
+                _nodeApplet.setAttribute("code", "telemedic.lab.ru.life.client.main.ApplicationClient");
+                document.body.appendChild(_nodeApplet);
+            }
+        </script>
+    </head>
+    <body onload="startApplet()">
+        
+    </body>
+</html>
