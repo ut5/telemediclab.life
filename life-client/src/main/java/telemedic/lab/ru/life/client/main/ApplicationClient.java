@@ -45,28 +45,43 @@ public class ApplicationClient extends JApplet {
         
         GroupLayout layout = new GroupLayout(mainPanel);
         mainPanel.setLayout(layout);
-        
+        layout.setAutoCreateGaps(true);
         layout.setHorizontalGroup(layout.createParallelGroup()
                 .addGroup(layout.createSequentialGroup()
-                        .addComponent(inputLabel,100,100,100)
-                        .addComponent(outputLabel,100,100,100)
+                        .addGap(10)
+                        .addComponent(inputLabel)
+                        .addGap(10)
+                        .addComponent(inputField,50,GroupLayout.PREFERRED_SIZE,150)
+                        .addGap(10)
                 )
                 .addGroup(layout.createSequentialGroup()
-                        .addComponent(inputField,50,50,50)
-                        .addComponent(resultField,50,50,50)
+                        .addGap(10)
+                        .addComponent(outputLabel)
+                        .addGap(10)
+                        .addComponent(resultField,50,GroupLayout.PREFERRED_SIZE,150)
+                        .addGap(10)
                 )
-                .addComponent(button,50,50,50)
+                .addGroup(layout.createSequentialGroup()
+                        .addGap(10,10,Short.MAX_VALUE)
+                        .addComponent(button)
+                        .addGap(10)
+                )
+                
         );
         layout.setVerticalGroup(layout.createSequentialGroup()
+                .addGap(10)
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addComponent(inputLabel,50,50,50)
-                        .addComponent(inputField,50,50,50)
+                        .addComponent(inputLabel)
+                        .addComponent(inputField)
                 )
+                .addGap(10)
                 .addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-                        .addComponent(outputLabel,50,50,50)
-                        .addComponent(resultField,50,50,50)
+                        .addComponent(outputLabel)
+                        .addComponent(resultField)
                 )
-                .addComponent(button,50,50,50)
+                .addGap(10)
+                .addComponent(button)
+                .addGap(10)
         );
         button.addActionListener(new ActionListener() {
             @Override
