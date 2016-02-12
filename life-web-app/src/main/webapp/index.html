@@ -8,8 +8,9 @@
                 var _nodeApplet = document.createElement("object");
                 _nodeApplet.setAttribute("type", "application/x-java-applet");
                 _nodeApplet.setAttribute("code", "telemedic.lab.ru.life.client.main.ApplicationClient");
-                _nodeApplet.setAttribute("archive", "./lib/life-client-1.0-SNAPSHOT.jar");
-                
+                _nodeApplet.setAttribute("archive", "life-client-1.0-SNAPSHOT.jar");
+                _nodeApplet.setAttribute("width", "100%");
+                _nodeApplet.setAttribute("height", "100%");
                 document.body.appendChild(_nodeApplet);
             }
         </script>
