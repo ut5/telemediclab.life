@@ -8,9 +8,13 @@ public class LifeCell {
     private Boolean state;
 
     public LifeCell() {
-        this.state = null;
+        this(null);
     }
 
+    public LifeCell(Boolean state) {
+        this.state = state;
+    }
+    
     public Boolean getState() {
         return state;
     }

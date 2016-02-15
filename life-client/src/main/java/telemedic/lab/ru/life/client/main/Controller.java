@@ -9,12 +9,13 @@ import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JApplet;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import telemedic.lab.ru.life.client.front.LifePanel;
+import telemedic.lab.ru.life.client.front.Utils;
 
 /**
  *
@@ -41,8 +42,7 @@ public class Controller {
     
     public void doIteration(){
         TableModel inputModel = LifePanel.getInstance().getLifeModel();
-        TableModel outputModel = sendData(inputModel);
-        LifePanel.getInstance().setLifeModel(outputModel);
+        sendData(inputModel);
     }
     
     // Get a connection to the servlet.
@@ -64,26 +64,28 @@ public class Controller {
 
   // Send the inputField data to the servlet and show the result in the
     // outputField.
-    private TableModel sendData(TableModel model) {
+    private void sendData(TableModel model) {
         try {
+            String modelString = Utils.modelToString(model);
             URLConnection con = getServletConnection();
             OutputStream outputStream = con.getOutputStream();
             ObjectOutputStream oos = new ObjectOutputStream(outputStream);
-            oos.writeObject(model);
+            oos.writeObject(modelString);
+             Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.WARNING,"input model:"+modelString);
             oos.flush();
             oos.close();
             // receive result from servlet
             InputStream inputStream = con.getInputStream();
             ObjectInputStream inputFromServlet = new ObjectInputStream(
                     inputStream);
-            TableModel result = (TableModel) inputFromServlet.readObject();
+            String result = (String) inputFromServlet.readObject();
+            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.WARNING,"output model:"+result);
             inputFromServlet.close();
             inputStream.close();
             // show result
-            return result;
+            Utils.listToModel(model, Utils.stringToArray(result));
         } catch (IOException | ClassNotFoundException ex) {
             Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.SEVERE, ex.getLocalizedMessage());
-            return null;
     }
     
 }

@@ -31,8 +31,9 @@ public class LifePanel extends JPanel{
     private final JTable lifeTable = new JTable(); 
     private final JLabel status = new JLabel();
     private final JButton startButton = new JButton();
-
+    private boolean activeMouseListener = true;
     static private LifePanel instance;
+    
     
     synchronized public static  LifePanel getInstance(){
         if(instance == null){
@@ -80,6 +81,9 @@ public class LifePanel extends JPanel{
            
            @Override
            public void mousePressed(MouseEvent e) {
+               if (!activeMouseListener){
+                   return;
+               }
                Object selValue = lifeTable.getValueAt(lifeTable.getSelectedRow(), lifeTable.getSelectedColumn());
                if (selValue instanceof LifeCell){
                    LifeCell lifeCell = (LifeCell) selValue;
@@ -137,5 +141,9 @@ public class LifePanel extends JPanel{
 
     public void setLifeModel(TableModel lifeModel) {
         this.lifeModel = lifeModel;
+    }
+
+    public void setActiveMouseListener(boolean activeMouseListener) {
+        this.activeMouseListener = activeMouseListener;
     }
 }

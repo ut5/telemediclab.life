@@ -18,7 +18,7 @@ public class LetsPlayAction extends AbstractAction{
 
     private boolean state = false;
     private final Integer INTERVAL = 500;
-    private final Timer timer;
+    private Timer timer;
     private final JLabel status;
     private final Controller controller = Controller.getController();
     private final ImageIcon playIcon = new ImageIcon(getClass().getClassLoader().getResource("imgs/play.png"));
@@ -27,7 +27,7 @@ public class LetsPlayAction extends AbstractAction{
     public LetsPlayAction(JLabel status) {
         putValue(Action.SMALL_ICON, playIcon);
         this.status = status;
-        this.timer = new Timer();
+        
     }
     
     
@@ -35,7 +35,11 @@ public class LetsPlayAction extends AbstractAction{
     @Override
     public void actionPerformed(ActionEvent e) {
         state = !state;
+        if (timer == null){
+            timer = new Timer();
+        }
         if (state){
+            LifePanel.getInstance().setActiveMouseListener(false);
            status.setText("Клетки начали эволюцию");
 //           putValue(Action.NAME, "Стоп");
            putValue(Action.SMALL_ICON, pauseIcon);
@@ -46,10 +50,12 @@ public class LetsPlayAction extends AbstractAction{
                 }
             }, INTERVAL, INTERVAL);
         }else{
+            LifePanel.getInstance().setActiveMouseListener(true);
             status.setText("Можно внести корректировки");
 //            putValue(Action.NAME, "Поехали");
             putValue(Action.SMALL_ICON, playIcon);
-            timer.purge();
+            timer.cancel();
+            timer = null;
         }
         
     }
