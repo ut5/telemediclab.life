@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.swing.table.TableModel;
+import telemedic.lab.ru.life.client.front.Utils;
 
 /**
  *
@@ -31,13 +32,13 @@ public class ServletDispetcher extends HttpServlet {
             response.setContentType("application/x-java-serialized-object");
             InputStream inputStream = request.getInputStream();
             ObjectInputStream inputFromApplet = new ObjectInputStream(inputStream);
-            TableModel model = (TableModel) inputFromApplet.readObject();
-            lifeRules.setModel(model);
+            String model = (String) inputFromApplet.readObject();
+            lifeRules.setModel(Utils.stringToArray(model));
             lifeRules.doIteration();
             // getting string value and passing to applet
             OutputStream outputStream = response.getOutputStream();
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
-            objectOutputStream.writeObject(lifeRules.getModel());
+            objectOutputStream.writeObject(Utils.arrayToString(lifeRules.getModel()));
             objectOutputStream.flush();
             objectOutputStream.close();
         } catch (IOException | ClassNotFoundException e) {
