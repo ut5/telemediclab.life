@@ -10,6 +10,8 @@
         <servlet-mapping>
             <servlet-name>ServletDispetcher</servlet-name>
             <url-pattern>/root/*</url-pattern>
+            <url-pattern>/lwa</url-pattern>
+            <url-pattern>/lwa/</url-pattern>
         </servlet-mapping>
         <session-config>
             <session-timeout>30</session-timeout>

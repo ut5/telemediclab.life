@@ -57,6 +57,7 @@
                 <version>2.6</version>
                 <executions>
                     <execution>
+                        <id>copy</id>
                         <phase>validate</phase>
                         <goals>
                             <goal>copy</goal>
@@ -74,6 +75,19 @@
                             </artifactItems>
                         </configuration>
                     </execution>
+                    <execution>
+                        <id>copyJars</id>
+                        <!--<phase>process-resources</phase>-->
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}/${project.name}-${project.version}/jar</outputDirectory>
+                            <overWriteReleases>false</overWriteReleases>
+                            <overWriteSnapshots>false</overWriteSnapshots>
+                            <overWriteIfNewer>true</overWriteIfNewer>
+                        </configuration>
+                    </execution>   
                 </executions>
             </plugin>
         </plugins>
