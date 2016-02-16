@@ -2,23 +2,21 @@
 package telemedic.lab.ru.life.web.app;
 
 import java.util.ArrayList;
-import javax.swing.table.TableModel;
-import telemedic.lab.ru.life.client.front.LifeCell;
 
 /**
  *
  * @author UT5
  */
-public class LifeCickle {
+public class LifesRules {
 
     private ArrayList<ArrayList> model;
     private ArrayList<ArrayList> newModel;
 
-    public ArrayList getModel() {
+    public synchronized ArrayList getModel() {
         return newModel;
     }
 
-    public void setModel(ArrayList<ArrayList> model) {
+    public synchronized void setModel(ArrayList<ArrayList> model) {
         this.model = model;
     }
 
