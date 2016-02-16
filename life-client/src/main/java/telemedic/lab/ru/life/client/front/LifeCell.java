@@ -15,11 +15,11 @@ public class LifeCell {
         this.state = state;
     }
     
-    public Boolean getState() {
+    public Boolean isLiving() {
         return state;
     }
 
-    public void setState(Boolean state) {
+    public void setLife(Boolean state) {
         this.state = state;
     }
 

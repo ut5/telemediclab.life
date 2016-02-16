@@ -1,11 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package telemedic.lab.ru.life.client.front;
 
-import java.awt.List;
 import java.util.ArrayList;
 import javax.swing.table.TableModel;
 
@@ -37,10 +32,10 @@ public class Utils {
             builder.append("[");
             for (int col=0;col<model.getColumnCount();col++){
                 LifeCell lifeCell = (LifeCell) model.getValueAt(row, col);
-                if (lifeCell.getState() == null){
+                if (lifeCell.isLiving() == null){
                     builder.append("0");
                 }else{
-                     builder.append(lifeCell.getState()?"1":"0");
+                     builder.append(lifeCell.isLiving()?"1":"0");
                 }
                 if (col + 1 <model.getColumnCount()){
                     builder.append(",");

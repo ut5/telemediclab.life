@@ -1,13 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package telemedic.lab.ru.life.client.front;
 
-import java.awt.MouseInfo;
+import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import javax.swing.AbstractAction;
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -23,6 +20,10 @@ import javax.swing.table.TableModel;
  */
 public class LifePanel extends JPanel{
     
+    private static final int [][]PLANNER_MASK = {{0,0,1},
+                                                 {1,0,1},
+                                                 {0,1,1}};
+    
     private static final Integer ROW_COUNT = 10;
     private static final Integer COL_COUNT = 20;
     private static final Integer CELL_SIZE = 25;
@@ -31,7 +32,9 @@ public class LifePanel extends JPanel{
     private final JTable lifeTable = new JTable(); 
     private final JLabel status = new JLabel();
     private final JButton startButton = new JButton();
-    private boolean activeMouseListener = true;
+    private final JButton plannerButton = new JButton();
+    private final JButton clearButton = new JButton();
+    private boolean activePanel = true;
     static private LifePanel instance;
     
     
@@ -54,7 +57,12 @@ public class LifePanel extends JPanel{
                 )
                 
                 .addGap(10)
-                .addComponent(startButton,70,70,70)
+                .addGroup(layout.createParallelGroup(GroupLayout.Alignment.CENTER)
+                        .addComponent(clearButton,120,120,120)
+                        .addComponent(plannerButton,120,120,120)
+                        .addComponent(startButton,70,70,70)
+                )
+                
                 .addGap(10)
         );
         layout.setVerticalGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
@@ -68,6 +76,10 @@ public class LifePanel extends JPanel{
                 )
                 .addGroup(layout.createSequentialGroup()
                         .addGap(10, 10, Short.MAX_VALUE)
+                        .addComponent(clearButton,GroupLayout.PREFERRED_SIZE,GroupLayout.PREFERRED_SIZE,GroupLayout.PREFERRED_SIZE)
+                        .addGap(10)
+                        .addComponent(plannerButton,GroupLayout.PREFERRED_SIZE,GroupLayout.PREFERRED_SIZE,GroupLayout.PREFERRED_SIZE)
+                        .addGap(10)
                         .addComponent(startButton,70,70,70)
                         .addGap(10, 10, Short.MAX_VALUE)
                 )
@@ -81,23 +93,46 @@ public class LifePanel extends JPanel{
            
            @Override
            public void mousePressed(MouseEvent e) {
-               if (!activeMouseListener){
+               if (!activePanel){
                    return;
                }
                Object selValue = lifeTable.getValueAt(lifeTable.getSelectedRow(), lifeTable.getSelectedColumn());
                if (selValue instanceof LifeCell){
                    LifeCell lifeCell = (LifeCell) selValue;
                    
-                   lifeCell.setState(lifeCell.getState()==null? true:null);
+                   lifeCell.setLife((lifeCell.isLiving()==null || lifeCell.isLiving() == false));
                    lifeTable.revalidate();
                    lifeTable.repaint();
                }
            }
        });
+       
+       plannerButton.setAction(new AbstractAction("Планнер") {
+           
+           @Override
+           public void actionPerformed(ActionEvent e) {
+              clearModel();
+              for (int row=0;row<PLANNER_MASK.length;row++) {
+                  for (int col=0;col<PLANNER_MASK.length;col++) {
+                      lifeModel.setValueAt(new LifeCell(PLANNER_MASK[row][col]==1), row, col);
+                   }
+              }
+           }
+       });
+       
+       clearButton.setAction(new AbstractAction("Очистить") {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                clearModel();
+            }
+        });
+       
        status.setText("Задайте  живые клетки");
     }
 
-    private void confModel(){
+    
+    private void clearModel(){
         for (int row=0;row<lifeModel.getRowCount();row++){
             for (int col=0;col<lifeModel.getColumnCount();col++){   
                 lifeModel.setValueAt(new LifeCell(), row, col);
@@ -125,7 +160,7 @@ public class LifePanel extends JPanel{
                 return LifeCell.class;
             }
         };
-        confModel();
+        clearModel();
         lifeTable.setModel(lifeModel);
         lifeTable.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
         lifeTable.setDefaultRenderer(LifeCell.class, new LifeTableCellRenderer());
@@ -135,15 +170,17 @@ public class LifePanel extends JPanel{
         confColumnModel();
 }
 
-    public TableModel getLifeModel() {
+    public synchronized TableModel getLifeModel() {
         return lifeModel;
     }
 
-    public void setLifeModel(TableModel lifeModel) {
+    public synchronized void setLifeModel(TableModel lifeModel) {
         this.lifeModel = lifeModel;
     }
 
-    public void setActiveMouseListener(boolean activeMouseListener) {
-        this.activeMouseListener = activeMouseListener;
+    public void setActivePanel(boolean activePanel) {
+        this.activePanel = activePanel;
+        plannerButton.setEnabled(activePanel);
+        clearButton.setEnabled(activePanel);
     }
 }

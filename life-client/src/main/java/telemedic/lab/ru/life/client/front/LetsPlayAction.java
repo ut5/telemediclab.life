@@ -1,6 +1,5 @@
 package telemedic.lab.ru.life.client.front;
 
-import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -39,7 +38,7 @@ public class LetsPlayAction extends AbstractAction{
             timer = new Timer();
         }
         if (state){
-            LifePanel.getInstance().setActiveMouseListener(false);
+            LifePanel.getInstance().setActivePanel(false);
            status.setText("Клетки начали эволюцию");
 //           putValue(Action.NAME, "Стоп");
            putValue(Action.SMALL_ICON, pauseIcon);
@@ -50,7 +49,7 @@ public class LetsPlayAction extends AbstractAction{
                 }
             }, INTERVAL, INTERVAL);
         }else{
-            LifePanel.getInstance().setActiveMouseListener(true);
+            LifePanel.getInstance().setActivePanel(true);
             status.setText("Можно внести корректировки");
 //            putValue(Action.NAME, "Поехали");
             putValue(Action.SMALL_ICON, playIcon);

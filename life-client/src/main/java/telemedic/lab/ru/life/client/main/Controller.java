@@ -9,7 +9,6 @@ import java.io.OutputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JApplet;
@@ -71,15 +70,12 @@ public class Controller {
             OutputStream outputStream = con.getOutputStream();
             ObjectOutputStream oos = new ObjectOutputStream(outputStream);
             oos.writeObject(modelString);
-             Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.WARNING,"input model:"+modelString);
             oos.flush();
             oos.close();
             // receive result from servlet
             InputStream inputStream = con.getInputStream();
-            ObjectInputStream inputFromServlet = new ObjectInputStream(
-                    inputStream);
+            ObjectInputStream inputFromServlet = new ObjectInputStream(inputStream);
             String result = (String) inputFromServlet.readObject();
-            Logger.getLogger(Logger.GLOBAL_LOGGER_NAME).log(Level.WARNING,"output model:"+result);
             inputFromServlet.close();
             inputStream.close();
             // show result
